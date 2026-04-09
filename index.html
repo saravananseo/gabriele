@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gabriele Pellerone — Fine Art Tattooing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;900&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#c9a84c; --gold-light:#e8c97a; --gold-dim:#7a6030;
+  --ink:#050505; --dark:#0d0d0d; --mid:#1a1a1a; --surface:#111111;
+  --text:#d4cfc7; --muted:#6b6560;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--text);font-family:'Cormorant Garamond',Georgia,serif;overflow-x:hidden;cursor:none}
+
+.cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s;mix-blend-mode:difference}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .18s ease;opacity:.6}
+
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:.35}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:22px 56px;background:linear-gradient(to bottom,rgba(5,5,5,.97) 0%,transparent 100%);transition:background .4s}
+nav.scrolled{background:rgba(5,5,5,.97);border-bottom:1px solid rgba(201,168,76,.15)}
+.nav-logo{font-family:'Cinzel',serif;font-size:.95rem;font-weight:900;letter-spacing:.22em;color:var(--gold);text-decoration:none}
+.nav-logo span{color:var(--text);font-weight:400}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-family:'Raleway',sans-serif;font-size:.58rem;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:14px}
+.lang-switcher{display:flex;align-items:center;border:1px solid rgba(201,168,76,.25);overflow:hidden}
+.lang-btn{font-family:'Raleway',sans-serif;font-size:.56rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);background:transparent;border:none;padding:8px 13px;cursor:none;transition:all .25s}
+.lang-btn.active{background:var(--gold);color:var(--ink)}
+.lang-btn:not(.active):hover{color:var(--gold)}
+.lang-sep{width:1px;height:16px;background:rgba(201,168,76,.25)}
+.nav-book{font-family:'Raleway',sans-serif;font-size:.58rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:10px 20px;text-decoration:none;transition:background .3s,transform .2s}
+.nav-book:hover{background:var(--gold-light);transform:translateY(-1px)}
+
+.hero{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(201,168,76,.07) 0%,transparent 70%),radial-gradient(ellipse at 20% 80%,rgba(201,168,76,.04) 0%,transparent 50%),var(--ink)}
+.hero-lines{position:absolute;inset:0;background-image:linear-gradient(to right,rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(201,168,76,.04) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse at 50% 50%,black 30%,transparent 80%)}
+.hero-content{position:relative;text-align:center;z-index:2}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.hero-eyebrow{font-family:'Raleway',sans-serif;font-size:.6rem;font-weight:300;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;opacity:0;animation:fadeUp 1s ease .3s forwards}
+.hero-title{font-family:'Cinzel',serif;font-size:clamp(3.5rem,10vw,9rem);font-weight:900;line-height:.9;color:var(--text);letter-spacing:.05em;opacity:0;animation:fadeUp 1s ease .6s forwards}
+.hero-title .g{color:var(--gold)}
+.hero-subtitle{font-family:'Cinzel',serif;font-size:clamp(.8rem,1.5vw,1.1rem);font-weight:400;letter-spacing:.3em;color:var(--muted);margin-top:12px;opacity:0;animation:fadeUp 1s ease .75s forwards}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(.9rem,1.7vw,1.25rem);font-weight:300;font-style:italic;color:var(--muted);margin-top:14px;letter-spacing:.08em;opacity:0;animation:fadeUp 1s ease .9s forwards}
+.hero-divider{width:56px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:28px auto;opacity:0;animation:fadeUp 1s ease 1.1s forwards}
+.hero-cta{display:flex;gap:18px;justify-content:center;align-items:center;opacity:0;animation:fadeUp 1s ease 1.3s forwards}
+.btn-primary{font-family:'Raleway',sans-serif;font-size:.6rem;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:14px 36px;text-decoration:none;transition:all .3s;border:1px solid var(--gold)}
+.btn-primary:hover{background:transparent;color:var(--gold)}
+.btn-secondary{font-family:'Raleway',sans-serif;font-size:.6rem;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:14px 14px;border-bottom:1px solid transparent;transition:all .3s}
+.btn-secondary:hover{color:var(--gold);border-bottom-color:var(--gold)}
+.hero-scroll{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:9px;opacity:0;animation:fadeUp 1s ease 2s forwards}
+.hero-scroll span{font-family:'Raleway',sans-serif;font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.scroll-line{width:1px;height:46px;background:linear-gradient(to bottom,var(--gold),transparent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+.marquee-wrap{border-top:1px solid rgba(201,168,76,.12);border-bottom:1px solid rgba(201,168,76,.12);padding:13px 0;overflow:hidden;background:var(--surface)}
+.marquee-track{display:flex;gap:52px;animation:marquee 32s linear infinite;white-space:nowrap}
+.marquee-track span{font-family:'Cinzel',serif;font-size:.56rem;font-weight:400;letter-spacing:.35em;text-transform:uppercase;color:var(--gold-dim);flex-shrink:0}
+.marquee-track .dot{color:var(--gold)}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+section{padding:110px 60px}
+.section-label{font-family:'Raleway',sans-serif;font-size:.57rem;font-weight:300;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:13px}
+.section-title{font-family:'Cinzel',serif;font-size:clamp(1.7rem,4vw,3rem);font-weight:600;color:var(--text);line-height:1.1}
+.inner{max-width:1200px;margin:0 auto}
+.inner-wide{max-width:1400px;margin:0 auto}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:84px;align-items:center}
+.about-text p{font-size:1.06rem;font-weight:300;line-height:1.9;color:var(--muted);margin-top:26px}
+.about-text p+p{margin-top:13px}
+.about-tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px}
+.about-tag{font-family:'Raleway',sans-serif;font-size:.56rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.3);padding:6px 14px}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:40px;padding-top:32px;border-top:1px solid rgba(201,168,76,.15)}
+.stat-num{font-family:'Cinzel',serif;font-size:2.1rem;font-weight:600;color:var(--gold);line-height:1}
+.stat-label{font-family:'Raleway',sans-serif;font-size:.56rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.about-img-stack{position:relative;height:560px}
+.about-img-main{position:absolute;right:0;top:0;width:80%;height:85%;object-fit:cover;object-position:center top;filter:grayscale(10%) contrast(1.05)}
+.about-img-accent{position:absolute;left:0;bottom:0;width:50%;height:54%;object-fit:cover;border:4px solid var(--ink);filter:grayscale(10%) contrast(1.05)}
+.about-gold-border{position:absolute;right:-11px;top:-11px;width:80%;height:85%;border:1px solid var(--gold-dim);z-index:-1}
+.forbes-badge{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(201,168,76,.35);padding:10px 16px;margin-top:26px}
+.forbes-badge span{font-family:'Raleway',sans-serif;font-size:.57rem;font-weight:300;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+
+/* STORIES */
+.stories-section{background:var(--surface)}
+.stories-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:48px}
+.story-card{position:relative;overflow:hidden;cursor:none;aspect-ratio:3/4}
+.story-card.wide{aspect-ratio:16/9;grid-column:span 2}
+.story-card img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.25,.46,.45,.94),filter .4s;filter:grayscale(20%) brightness(.85)}
+.story-card:hover img{transform:scale(1.05);filter:grayscale(0%) brightness(.68)}
+.story-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,5,5,.88) 0%,rgba(5,5,5,.15) 55%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:36px;transition:background .4s}
+.story-tag{font-family:'Raleway',sans-serif;font-size:.54rem;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.story-title{font-family:'Cinzel',serif;font-size:clamp(1rem,2.2vw,1.6rem);font-weight:600;color:var(--text);line-height:1.2;margin-bottom:12px}
+.story-body{font-size:.93rem;font-weight:300;line-height:1.75;color:rgba(212,207,199,.8);max-width:580px;max-height:0;overflow:hidden;transition:max-height .45s ease,opacity .4s;opacity:0}
+.story-card:hover .story-body{max-height:200px;opacity:1}
+
+/* PRIVÉ */
+.prive-section{background:var(--ink);position:relative;overflow:hidden}
+.prive-section::before{content:'PRIVÉ';position:absolute;right:-30px;top:50%;transform:translateY(-50%) rotate(90deg);font-family:'Cinzel',serif;font-size:9rem;font-weight:900;color:rgba(201,168,76,.025);letter-spacing:.3em;white-space:nowrap;pointer-events:none}
+.prive-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;align-items:start}
+.prive-img{width:100%;object-fit:cover;filter:grayscale(10%) contrast(1.05)}
+.prive-content p{font-size:1.03rem;font-weight:300;line-height:1.9;color:var(--muted);margin-top:22px}
+.prive-includes{margin-top:36px;padding-top:30px;border-top:1px solid rgba(201,168,76,.15)}
+.prive-includes h4{font-family:'Raleway',sans-serif;font-size:.58rem;font-weight:400;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.prive-item{display:flex;gap:14px;align-items:flex-start;padding:13px 0;border-bottom:1px solid rgba(201,168,76,.08)}
+.prive-item-icon{color:var(--gold);font-size:.85rem;margin-top:3px;flex-shrink:0}
+.prive-item-title{font-family:'Cormorant Garamond',serif;font-size:.98rem;font-weight:600;color:var(--text)}
+.prive-item-desc{font-size:.88rem;font-weight:300;line-height:1.7;color:var(--muted);margin-top:2px}
+
+/* WORKSHOP */
+.workshop-section{background:var(--surface)}
+.workshop-tabs{display:flex;margin-top:46px;border-bottom:1px solid rgba(201,168,76,.15)}
+.workshop-tab{font-family:'Raleway',sans-serif;font-size:.6rem;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);background:transparent;border:none;padding:15px 28px;cursor:none;transition:all .25s;border-bottom:2px solid transparent;margin-bottom:-1px}
+.workshop-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.workshop-tab:hover{color:var(--text)}
+.workshop-content{display:none;padding-top:44px}
+.workshop-content.active{display:grid;grid-template-columns:1fr 1.4fr;gap:64px}
+.workshop-img{width:100%;object-fit:cover;filter:grayscale(15%) contrast(1.05)}
+.workshop-meta{font-family:'Raleway',sans-serif;font-size:.58rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
+.workshop-day{margin-top:24px;padding:22px;border:1px solid rgba(201,168,76,.1);background:rgba(201,168,76,.02);transition:border-color .3s}
+.workshop-day:hover{border-color:rgba(201,168,76,.25)}
+.workshop-day-title{font-family:'Cinzel',serif;font-size:.82rem;font-weight:600;color:var(--gold);letter-spacing:.12em;margin-bottom:9px}
+.workshop-day p{font-size:.93rem;font-weight:300;line-height:1.8;color:var(--muted)}
+.workshop-cert{margin-top:24px;display:flex;align-items:center;gap:13px;padding:16px 20px;border:1px solid rgba(201,168,76,.3)}
+.workshop-cert-icon{font-size:1.4rem;color:var(--gold)}
+.workshop-cert-text{font-family:'Raleway',sans-serif;font-size:.6rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--text)}
+
+/* GALLERY */
+.gallery-section{background:var(--ink)}
+.gallery-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:46px}
+.gallery-filters{display:flex;gap:24px;list-style:none}
+.gallery-filters button{font-family:'Raleway',sans-serif;font-size:.58rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:none;transition:color .3s;border-bottom:1px solid transparent;padding-bottom:3px}
+.gallery-filters button:hover,.gallery-filters button.active{color:var(--gold);border-bottom-color:var(--gold)}
+.gallery-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:70px;gap:3px}
+.gallery-item{position:relative;overflow:hidden;cursor:none}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.25,.46,.45,.94),filter .4s;filter:grayscale(15%) contrast(1.05)}
+.gallery-item:hover img{transform:scale(1.07);filter:grayscale(0%)}
+.gallery-item-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,5,5,.78) 0%,transparent 60%);opacity:0;transition:opacity .4s;display:flex;align-items:flex-end;padding:16px}
+.gallery-item:hover .gallery-item-overlay{opacity:1}
+.gallery-item-overlay span{font-family:'Raleway',sans-serif;font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.g1{grid-column:span 5;grid-row:span 7}.g2{grid-column:span 7;grid-row:span 4}
+.g3{grid-column:span 4;grid-row:span 6}.g4{grid-column:span 3;grid-row:span 6}
+.g5{grid-column:span 5;grid-row:span 5}.g6{grid-column:span 7;grid-row:span 4}
+
+/* BOOKING */
+.booking-section{background:var(--mid);text-align:center;padding:128px 60px;position:relative;overflow:hidden}
+.booking-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.07) 0%,transparent 70%);pointer-events:none}
+.booking-form{max-width:620px;margin:46px auto 0;display:grid;gap:13px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.form-field{display:flex;flex-direction:column;gap:6px;text-align:left}
+.form-field label{font-family:'Raleway',sans-serif;font-size:.54rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+.form-field input,.form-field select,.form-field textarea{background:transparent;border:1px solid rgba(201,168,76,.2);color:var(--text);padding:12px 15px;font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;transition:border-color .3s;cursor:none}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--gold)}
+.form-field select option{background:var(--dark)}
+.form-field textarea{height:88px;resize:none}
+.btn-submit{font-family:'Raleway',sans-serif;font-size:.62rem;font-weight:400;letter-spacing:.24em;text-transform:uppercase;color:var(--ink);background:var(--gold);border:1px solid var(--gold);padding:15px 44px;cursor:none;transition:all .3s;margin-top:7px}
+.btn-submit:hover{background:transparent;color:var(--gold)}
+
+footer{background:var(--ink);border-top:1px solid rgba(201,168,76,.12);padding:68px 60px 36px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;max-width:1200px;margin:0 auto 52px}
+.footer-brand .nav-logo{display:block;font-size:1rem;margin-bottom:16px}
+.footer-brand p{font-size:.86rem;font-weight:300;line-height:1.85;color:var(--muted);font-style:italic}
+.footer-social{display:flex;gap:16px;margin-top:22px}
+.footer-social a{font-family:'Raleway',sans-serif;font-size:.54rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.footer-social a:hover{color:var(--gold)}
+.footer-col h4{font-family:'Cinzel',serif;font-size:.58rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.footer-col ul{list-style:none}
+.footer-col ul li+li{margin-top:10px}
+.footer-col ul a{font-family:'Raleway',sans-serif;font-size:.64rem;font-weight:300;letter-spacing:.1em;color:var(--muted);text-decoration:none;transition:color .3s}
+.footer-col ul a:hover{color:var(--text)}
+.footer-bottom{max-width:1200px;margin:0 auto;padding-top:26px;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center}
+.footer-bottom span,.footer-bottom a{font-family:'Raleway',sans-serif;font-size:.54rem;font-weight:300;letter-spacing:.15em;color:var(--muted);text-decoration:none}
+
+.lightbox{position:fixed;inset:0;background:rgba(5,5,5,.96);z-index:2000;display:none;align-items:center;justify-content:center;padding:48px}
+.lightbox.active{display:flex}
+.lightbox img{max-width:90vw;max-height:88vh;object-fit:contain;animation:lbIn .35s ease}
+@keyframes lbIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.lightbox-close{position:absolute;top:26px;right:34px;font-family:'Raleway',sans-serif;font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:none;transition:color .3s}
+.lightbox-close:hover{color:var(--gold)}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.15s}.reveal-delay-2{transition-delay:.3s}.reveal-delay-3{transition-delay:.45s}
+[data-t]{transition:opacity .22s ease}
+
+@media(max-width:1024px){
+  nav{padding:18px 22px}.nav-links{display:none}
+  section{padding:68px 22px}
+  .about-grid,.prive-grid{grid-template-columns:1fr;gap:40px}
+  .about-img-stack{height:360px}
+  .workshop-content.active{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-auto-rows:200px}
+  .g1,.g2,.g3,.g4,.g5,.g6{grid-column:span 1;grid-row:span 1}
+  .stories-grid{grid-template-columns:1fr}.story-card.wide{grid-column:span 1}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:34px}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lbClose" data-t="ui.close">Close ✕</button>
+  <img src="" id="lbImg" alt="">
+</div>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">G<span>abriele Pellerone</span></a>
+  <ul class="nav-links">
+    <li><a href="#about" data-t="nav.about">About</a></li>
+    <li><a href="#stories" data-t="nav.stories">Stories</a></li>
+    <li><a href="#prive" data-t="nav.prive">Tattoo Privé</a></li>
+    <li><a href="#workshop" data-t="nav.workshop">Workshop</a></li>
+    <li><a href="#gallery" data-t="nav.gallery">Gallery</a></li>
+    <li><a href="#booking" data-t="nav.contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+      <div class="lang-sep"></div>
+      <button class="lang-btn" id="btnIT" onclick="setLang('it')">IT</button>
+    </div>
+    <a href="#booking" class="nav-book" data-t="nav.book">Book a Session</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow" data-t="hero.eyebrow">Hyper-Realism · Portraits · Fine Art · Forbes Italia</p>
+    <h1 class="hero-title"><span class="g">G</span>abriele<br>Pellerone</h1>
+    <p class="hero-subtitle" data-t="hero.subtitle">Milan · Reggio Calabria · New York</p>
+    <p class="hero-sub" data-t="hero.sub">Where skin becomes a masterpiece</p>
+    <div class="hero-divider"></div>
+    <div class="hero-cta">
+      <a href="#gallery" class="btn-primary" data-t="hero.cta1">View Portfolio</a>
+      <a href="#prive" class="btn-secondary" data-t="hero.cta2">Tattoo Privé →</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span data-t="ui.scroll">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Hyper-Realistic Portraits</span><span class="dot">✦</span>
+    <span>Forbes Italia 2022</span><span class="dot">✦</span>
+    <span>Travis Scott · Central Cee</span><span class="dot">✦</span>
+    <span>Venice Biennale</span><span class="dot">✦</span>
+    <span>NFT &amp; Web 3.0</span><span class="dot">✦</span>
+    <span>1.5M+ Community</span><span class="dot">✦</span>
+    <span>Tattoo Privé Experience</span><span class="dot">✦</span>
+    <span>Hyper-Realistic Portraits</span><span class="dot">✦</span>
+    <span>Forbes Italia 2022</span><span class="dot">✦</span>
+    <span>Travis Scott · Central Cee</span><span class="dot">✦</span>
+    <span>Venice Biennale</span><span class="dot">✦</span>
+    <span>NFT &amp; Web 3.0</span><span class="dot">✦</span>
+    <span>1.5M+ Community</span><span class="dot">✦</span>
+    <span>Tattoo Privé Experience</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="inner">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p class="section-label" data-t="about.label">The Artist</p>
+        <h2 class="section-title" data-t="about.title">An international<br><em>icon of realism.</em></h2>
+        <p data-t="about.p1">Gabriele Pellerone is an Italian tattoo artist and visual artist, active between Milan and Reggio Calabria, with a strong presence in New York City. He began drawing at the age of three and approached tattooing as a self-taught artist at twenty, transforming his artistic vision into a unique language that blends skin, art, and Web 3.0.</p>
+        <p data-t="about.p2">Specializing in realistic and portrait tattoos, he is followed by over 1.5 million people online. He has tattooed Travis Scott, Central Cee, Cash XO, and Baby Gang, and was among the first to bring tattooing into contemporary art, exhibiting at the Venice Biennale.</p>
+        <div class="forbes-badge">
+          <span>★</span>
+          <span data-t="about.forbes">Forbes Italia — "100 Number One: Italy's Young Leaders of the Future 2022"</span>
+        </div>
+        <div class="about-tags">
+          <span class="about-tag" data-t="tag.realism">Hyper-Realism</span>
+          <span class="about-tag" data-t="tag.portrait">Portraits</span>
+          <span class="about-tag" data-t="tag.nft">NFT &amp; Web 3.0</span>
+          <span class="about-tag" data-t="tag.animals">Animals</span>
+          <span class="about-tag" data-t="tag.divine">Narrative Art</span>
+        </div>
+        <div class="about-stats">
+          <div><div class="stat-num">1.5M+</div><div class="stat-label" data-t="stat.followers">Global Followers</div></div>
+          <div><div class="stat-num">2K+</div><div class="stat-label" data-t="stat.nft">NFT Artworks</div></div>
+          <div><div class="stat-num">∞</div><div class="stat-label" data-t="stat.stories">Stories Told</div></div>
+          <div><div class="stat-num">3</div><div class="stat-label" data-t="stat.cities">Cities</div></div>
+        </div>
+      </div>
+      <div class="about-img-stack reveal reveal-delay-2">
+        <img src="/gabriele/images/IMG_1982.jpg" class="about-img-main" alt="Gabriele at work">
+        <img src="/gabriele/images/IMG_1972.jpg" class="about-img-accent" alt="Tattoo work">
+        <div class="about-gold-border"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORIES -->
+<section id="stories" class="stories-section">
+  <div class="inner-wide">
+    <p class="section-label reveal" data-t="stories.label">Featured Works</p>
+    <h2 class="section-title reveal reveal-delay-1" data-t="stories.title">Stories told<br><em>through skin.</em></h2>
+    <div class="stories-grid">
+      <div class="story-card wide reveal">
+        <img src="/gabriele/images/IMG_1972.jpg" alt="Dante">
+        <div class="story-overlay">
+          <div class="story-tag" data-t="story1.tag">Narrative Realism · Full Back</div>
+          <h3 class="story-title" data-t="story1.title">Tattooing Dante's Journey</h3>
+          <p class="story-body" data-t="story1.body">A tattoo inspired by the Divine Comedy — from Hell to Paradise, honoring every step of Dante's journey. Dark textured tones, gradual ascent, luminous clarity. Nothing placed randomly.</p>
+        </div>
+      </div>
+      <div class="story-card reveal reveal-delay-1">
+        <img src="/gabriele/images/IMG_1970.jpg" alt="Portrait">
+        <div class="story-overlay">
+          <div class="story-tag" data-t="story2.tag">Color Realism · Sleeve</div>
+          <h3 class="story-title" data-t="story2.title">A Portrait, A Story</h3>
+          <p class="story-body" data-t="story2.body">A portrait is not just a technical matter — it is a responsibility. Every gaze holds a story that deserves empathy, precision, and heart.</p>
+        </div>
+      </div>
+      <div class="story-card reveal reveal-delay-2">
+        <img src="/gabriele/images/IMG_1982.jpg" alt="Memory">
+        <div class="story-overlay">
+          <div class="story-tag" data-t="story3.tag">Photo Realism · Memorial</div>
+          <h3 class="story-title" data-t="story3.title">Memory Photo</h3>
+          <p class="story-body" data-t="story3.body">Old photographs have a special power. Transforming them into a tattoo means passing on a memory — restoring dignity and truth to a keepsake that time has softened.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVÉ -->
+<section id="prive" class="prive-section">
+  <div class="inner">
+    <div class="prive-grid">
+      <div class="reveal">
+        <img src="/gabriele/images/IMG_1972.jpg" class="prive-img" alt="Privé">
+      </div>
+      <div class="reveal reveal-delay-1">
+        <p class="section-label" data-t="prive.label">Exclusive Experience</p>
+        <h2 class="section-title" data-t="prive.title">Tattoo Privé<br><em>Experience</em></h2>
+        <p data-t="prive.p1">The Tattoo Privé Experience redefines the traditional tattoo session by elevating it into a fully immersive and sophisticated journey — placing the client at the center of an exclusive, meticulously curated environment.</p>
+        <p data-t="prive.p2">This is more than just a tattoo — it's a carefully crafted experience designed for those who seek authenticity, refinement, and innovation in every aspect of their journey.</p>
+        <div class="prive-includes">
+          <h4 data-t="prive.includes">What's Included</h4>
+          <div class="prive-item"><div class="prive-item-icon">◈</div><div><div class="prive-item-title" data-t="prive.i1.title">Private Session with Gabriele</div><div class="prive-item-desc" data-t="prive.i1.desc">A one-of-a-kind artwork on your skin, created in complete privacy with utmost attention to detail.</div></div></div>
+          <div class="prive-item"><div class="prive-item-icon">◈</div><div><div class="prive-item-title" data-t="prive.i2.title">Exclusive Cigar Experience</div><div class="prive-item-desc" data-t="prive.i2.desc">A moment of relaxation and indulgence designed to complement the atmosphere of the day.</div></div></div>
+          <div class="prive-item"><div class="prive-item-icon">◈</div><div><div class="prive-item-title" data-t="prive.i3.title">18k Gold-Plated Tattoo Needle</div><div class="prive-item-desc" data-t="prive.i3.desc">A personalized luxury gift — a unique keepsake created as a symbol of your Tattoo Privé.</div></div></div>
+          <div class="prive-item"><div class="prive-item-icon">◈</div><div><div class="prive-item-title" data-t="prive.i4.title">Champagne Aperitif &amp; Fine Lunch</div><div class="prive-item-desc" data-t="prive.i4.desc">A curated gastronomic experience to celebrate your day in a refined and memorable way.</div></div></div>
+          <div class="prive-item"><div class="prive-item-icon">◈</div><div><div class="prive-item-title" data-t="prive.i5.title">Priority Booking — No Waiting List</div><div class="prive-item-desc" data-t="prive.i5.desc">Exclusive access on your chosen date, even on Sundays, without delays.</div></div></div>
+        </div>
+        <div style="margin-top:32px"><a href="#booking" class="btn-primary" data-t="prive.cta">Book Your Privé</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKSHOP -->
+<section id="workshop" class="workshop-section">
+  <div class="inner-wide">
+    <p class="section-label reveal" data-t="ws.label">Education</p>
+    <h2 class="section-title reveal reveal-delay-1" data-t="ws.title">Master your craft.<br><em>Learn from the best.</em></h2>
+    <p style="margin-top:18px;font-size:1.03rem;font-weight:300;line-height:1.85;color:var(--muted);max-width:680px" class="reveal reveal-delay-2" data-t="ws.intro">My seminars go beyond simple technique — they transmit a structured method, a clear artistic vision, and solid professional discipline. Immersive, targeted experiences designed to form competent, conscious tattoo professionals.</p>
+    <div class="workshop-tabs">
+      <button class="workshop-tab active" onclick="switchTab(event,'base')" data-t="ws.tab.base">Base Workshop</button>
+      <button class="workshop-tab" onclick="switchTab(event,'advanced')" data-t="ws.tab.adv">Advanced Workshop</button>
+    </div>
+    <div class="workshop-content active" id="tab-base">
+      <div><img src="/gabriele/images/IMG_1970.jpg" class="workshop-img" alt="Workshop Base"></div>
+      <div>
+        <div class="workshop-meta" data-t="ws.base.meta">Duration: 3 Days · Foundations of Tattooing</div>
+        <div class="workshop-day"><div class="workshop-day-title" data-t="ws.d1">Day 1 — Theory</div><p data-t="ws.base.d1.body">History &amp; cultural significance, hygiene &amp; safety standards, materials &amp; tools, drawing theory, stencil creation, professional ethics.</p></div>
+        <div class="workshop-day"><div class="workshop-day-title" data-t="ws.d2">Day 2 — Technique &amp; Practice</div><p data-t="ws.base.d2.body">Machine setup &amp; demonstration, guided exercises on synthetic skin — hatching, line control, fill techniques — with individual feedback from Gabriele.</p></div>
+        <div class="workshop-day"><div class="workshop-day-title" data-t="ws.d3">Day 3 — Live Practice</div><p data-t="ws.base.d3.body">Real-simulation tattoo session on synthetic skin. Step-by-step supervision, collective review, individual feedback, and certificate presentation.</p></div>
+        <div class="workshop-cert"><div class="workshop-cert-icon">✦</div><div class="workshop-cert-text" data-t="ws.cert">Certificate of Participation Included</div></div>
+        <div style="margin-top:26px"><a href="#booking" class="btn-primary" data-t="ws.cta">Request Information</a></div>
+      </div>
+    </div>
+    <div class="workshop-content" id="tab-advanced">
+      <div><img src="/gabriele/images/IMG_1982.jpg" class="workshop-img" alt="Workshop Advanced"></div>
+      <div>
+        <div class="workshop-meta" data-t="ws.adv.meta">Duration: 3 Days · Advanced Realism &amp; Professional Positioning</div>
+        <div class="workshop-day"><div class="workshop-day-title" data-t="ws.d1">Day 1 — Mental Approach &amp; Advanced Theory</div><p data-t="ws.adv.d1.body">Professional mindset, realistic tattoo theory (B&amp;W and color), advanced color harmonics, pigment saturation, and marketing &amp; social positioning for artists.</p></div>
+        <div class="workshop-day"><div class="workshop-day-title" data-t="ws.d2">Day 2 — Guided Practice on Synthetic Skin</div><p data-t="ws.adv.d2.body">Complete realistic tattoo execution — lines, soft shading, fill methods — each phase with personalized corrections by Gabriele.</p></div>
+        <div class="workshop-day"><div class="workshop-day-title" data-t="ws.d3">Day 3 — Live Technical Demonstration</div><p data-t="ws.adv.d3.body">Gabriele executes a complete realistic tattoo live, explaining every phase in real time. Open Q&amp;A, collective feedback, and official certificate delivery.</p></div>
+        <div class="workshop-cert"><div class="workshop-cert-icon">✦</div><div class="workshop-cert-text" data-t="ws.cert">Certificate of Participation Included</div></div>
+        <div style="margin-top:26px"><a href="#booking" class="btn-primary" data-t="ws.cta">Request Information</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="gallery-section">
+  <div class="inner-wide">
+    <div class="gallery-header reveal">
+      <div>
+        <p class="section-label" data-t="gallery.label">Selected Works</p>
+        <h2 class="section-title" data-t="gallery.title">The Portfolio</h2>
+      </div>
+      <ul class="gallery-filters">
+        <li><button class="active" data-t="gf.all">All</button></li>
+        <li><button data-t="gf.portrait">Portraits</button></li>
+        <li><button data-t="gf.realism">Realism</button></li>
+        <li><button data-t="gf.animals">Animals</button></li>
+        <li><button data-t="gf.fullback">Full Back</button></li>
+      </ul>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item g1" onclick="openLightbox(this)"><img src="/gabriele/images/IMG_1982.jpg" alt=""><div class="gallery-item-overlay"><span data-t="gi.figurative">Figurative · Oil Study</span></div></div>
+      <div class="gallery-item g2" onclick="openLightbox(this)"><img src="/gabriele/images/IMG_1972.jpg" alt=""><div class="gallery-item-overlay"><span data-t="gi.fullback">Full Back · Black &amp; Grey</span></div></div>
+      <div class="gallery-item g3" onclick="openLightbox(this)"><img src="/gabriele/images/IMG_1970.jpg" alt=""><div class="gallery-item-overlay"><span data-t="gi.sleeve">Sleeve · Religious Realism</span></div></div>
+      <div class="gallery-item g4" onclick="openLightbox(this)"><img src="/gabriele/images/IMG_1972.jpg" alt=""><div class="gallery-item-overlay"><span data-t="gi.wings">Wings · Detail</span></div></div>
+      <div class="gallery-item g5" onclick="openLightbox(this)"><img src="/gabriele/images/IMG_1970.jpg" alt=""><div class="gallery-item-overlay"><span data-t="gi.angels">Angels · Sleeve</span></div></div>
+      <div class="gallery-item g6" onclick="openLightbox(this)"><img src="/gabriele/images/IMG_1982.jpg" alt=""><div class="gallery-item-overlay"><span data-t="gi.light">Study in Light</span></div></div>
+    </div>
+    <div style="text-align:center;margin-top:42px" class="reveal">
+      <a href="#booking" class="btn-primary" data-t="gallery.cta">Commission Your Piece</a>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking" class="booking-section">
+  <p class="section-label" data-t="book.label">Get in Touch</p>
+  <h2 class="section-title" data-t="book.title">Book a Session</h2>
+  <p style="font-size:1.03rem;font-weight:300;color:var(--muted);max-width:460px;margin:13px auto 0;line-height:1.75;font-style:italic" data-t="book.sub">Limited availability each month. Gabriele will respond personally within 48 hours. Or email <a href="mailto:gabrielepellerone@gmail.com" style="color:var(--gold)">gabrielepellerone@gmail.com</a> directly.</p>
+  <form class="booking-form" onsubmit="handleSubmit(event)">
+    <div class="form-row">
+      <div class="form-field"><label data-t="book.fname">Name</label><input type="text" data-t-ph="book.fname.ph" placeholder="Your name"></div>
+      <div class="form-field"><label data-t="book.email">Email</label><input type="email" placeholder="your@email.com"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-field"><label data-t="book.phone">Phone</label><input type="tel" data-t-ph="book.phone.ph" placeholder="+1 000 000 0000"></div>
+      <div class="form-field"><label data-t="book.type">Request Type</label>
+        <select>
+          <option value="" data-t="book.type.ph">Select…</option>
+          <option data-t="book.type.tattoo">Tattoo Session</option>
+          <option data-t="book.type.prive">Tattoo Privé</option>
+          <option data-t="book.type.workshop">Workshop</option>
+          <option data-t="book.type.nft">NFT / Collaboration</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-field"><label data-t="book.vision">Your Message</label><textarea data-t-ph="book.vision.ph" placeholder="Describe your idea, project, or question…"></textarea></div>
+    <button type="submit" class="btn-submit" data-t="book.submit">Send Message →</button>
+  </form>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">G<span>abriele Pellerone</span></a>
+      <p data-t="footer.brand">Italian tattoo artist and visual artist. Active between Milan, Reggio Calabria, and New York City. Hyper-realism, portraits, NFTs, and the Tattoo Privé experience.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/gabrielepellerone/" target="_blank">Instagram</a>
+        <a href="mailto:gabrielepellerone@gmail.com">Email</a>
+        <a href="https://www.gabrielepellerone.com" target="_blank">Website</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4 data-t="footer.nav">Navigation</h4>
+      <ul>
+        <li><a href="#about" data-t="nav.about">About</a></li>
+        <li><a href="#stories" data-t="nav.stories">Stories</a></li>
+        <li><a href="#prive" data-t="nav.prive">Tattoo Privé</a></li>
+        <li><a href="#workshop" data-t="nav.workshop">Workshop</a></li>
+        <li><a href="#gallery" data-t="nav.gallery">Gallery</a></li>
+        <li><a href="#booking" data-t="nav.contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-t="footer.specialties">Specialties</h4>
+      <ul>
+        <li><a href="#gallery" data-t="tag.realism">Hyper-Realism</a></li>
+        <li><a href="#gallery" data-t="tag.portrait">Portraits</a></li>
+        <li><a href="#gallery" data-t="tag.animals">Animals</a></li>
+        <li><a href="#gallery" data-t="tag.divine">Narrative Art</a></li>
+        <li><a href="#gallery" data-t="tag.nft">NFT &amp; Web 3.0</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-t="footer.contact">Contact</h4>
+      <ul>
+        <li><a href="mailto:gabrielepellerone@gmail.com">gabrielepellerone@gmail.com</a></li>
+        <li><a href="https://www.instagram.com/gabrielepellerone/">@gabrielepellerone</a></li>
+        <li><a href="#prive" data-t="nav.prive">Tattoo Privé</a></li>
+        <li><a href="#workshop" data-t="nav.workshop">Workshop</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span data-t="footer.copy">© 2026 Gabriele Pellerone. All rights reserved.</span>
+    <a href="#" data-t="footer.privacy">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+const T = {
+en:{
+'nav.about':'About','nav.stories':'Stories','nav.prive':'Tattoo Privé','nav.workshop':'Workshop','nav.gallery':'Gallery','nav.contact':'Contact','nav.book':'Book a Session',
+'ui.close':'Close ✕','ui.scroll':'Scroll',
+'hero.eyebrow':'Hyper-Realism · Portraits · Fine Art · Forbes Italia','hero.subtitle':'Milan · Reggio Calabria · New York','hero.sub':'Where skin becomes a masterpiece','hero.cta1':'View Portfolio','hero.cta2':'Tattoo Privé →',
+'about.label':'The Artist','about.title':'An international<br><em>icon of realism.</em>',
+'about.p1':'Gabriele Pellerone is an Italian tattoo artist and visual artist, active between Milan and Reggio Calabria, with a strong presence in New York City. He began drawing at the age of three and approached tattooing as a self-taught artist at twenty, transforming his artistic vision into a unique language that blends skin, art, and Web 3.0.',
+'about.p2':'Specializing in realistic and portrait tattoos, he is followed by over 1.5 million people online. He has tattooed Travis Scott, Central Cee, Cash XO, and Baby Gang, and was among the first to bring tattooing into contemporary art, exhibiting at the Venice Biennale.',
+'about.forbes':'Forbes Italia — "100 Number One: Italy\'s Young Leaders of the Future 2022"',
+'tag.realism':'Hyper-Realism','tag.portrait':'Portraits','tag.nft':'NFT & Web 3.0','tag.animals':'Animals','tag.divine':'Narrative Art',
+'stat.followers':'Global Followers','stat.nft':'NFT Artworks','stat.stories':'Stories Told','stat.cities':'Cities',
+'stories.label':'Featured Works','stories.title':'Stories told<br><em>through skin.</em>',
+'story1.tag':'Narrative Realism · Full Back','story1.title':"Tattooing Dante's Journey",'story1.body':"A tattoo inspired by the Divine Comedy — from Hell to Paradise, honoring every step of Dante's journey. Dark textured tones, gradual ascent, luminous clarity. Nothing placed randomly.",
+'story2.tag':'Color Realism · Sleeve','story2.title':'A Portrait, A Story','story2.body':'A portrait is not just a technical matter — it is a responsibility. Every gaze holds a story that deserves empathy, precision, and heart.',
+'story3.tag':'Photo Realism · Memorial','story3.title':'Memory Photo','story3.body':'Old photographs have a special power. Transforming them into a tattoo means passing on a memory — restoring dignity and truth to a keepsake that time has softened.',
+'prive.label':'Exclusive Experience','prive.title':'Tattoo Privé<br><em>Experience</em>',
+'prive.p1':'The Tattoo Privé Experience redefines the traditional tattoo session by elevating it into a fully immersive and sophisticated journey — placing the client at the center of an exclusive, meticulously curated environment.',
+'prive.p2':"This is more than just a tattoo — it's a carefully crafted experience designed for those who seek authenticity, refinement, and innovation in every aspect of their journey.",
+'prive.includes':"What's Included",
+'prive.i1.title':'Private Session with Gabriele','prive.i1.desc':'A one-of-a-kind artwork on your skin, created in complete privacy with utmost attention to detail.',
+'prive.i2.title':'Exclusive Cigar Experience','prive.i2.desc':'A moment of relaxation and indulgence designed to complement the atmosphere of the day.',
+'prive.i3.title':'18k Gold-Plated Tattoo Needle','prive.i3.desc':'A personalized luxury gift — a unique keepsake created as a symbol of your Tattoo Privé.',
+'prive.i4.title':'Champagne Aperitif & Fine Lunch','prive.i4.desc':'A curated gastronomic experience to celebrate your day in a refined and memorable way.',
+'prive.i5.title':'Priority Booking — No Waiting List','prive.i5.desc':'Exclusive access on your chosen date, even on Sundays, without delays.',
+'prive.cta':'Book Your Privé',
+'ws.label':'Education','ws.title':'Master your craft.<br><em>Learn from the best.</em>','ws.intro':'My seminars go beyond simple technique — they transmit a structured method, a clear artistic vision, and solid professional discipline. Immersive, targeted experiences designed to form competent, conscious tattoo professionals.',
+'ws.tab.base':'Base Workshop','ws.tab.adv':'Advanced Workshop',
+'ws.base.meta':'Duration: 3 Days · Foundations of Tattooing',
+'ws.base.d1.body':'History & cultural significance, hygiene & safety standards, materials & tools, drawing theory, stencil creation, professional ethics.',
+'ws.base.d2.body':'Machine setup & demonstration, guided exercises on synthetic skin — hatching, line control, fill techniques — with individual feedback from Gabriele.',
+'ws.base.d3.body':'Real-simulation tattoo session on synthetic skin. Step-by-step supervision, collective review, individual feedback, and certificate presentation.',
+'ws.adv.meta':'Duration: 3 Days · Advanced Realism & Professional Positioning',
+'ws.adv.d1.body':'Professional mindset, realistic tattoo theory (B&W and color), advanced color harmonics, pigment saturation, and marketing & social positioning for artists.',
+'ws.adv.d2.body':'Complete realistic tattoo execution — lines, soft shading, fill methods — each phase with personalized corrections by Gabriele.',
+'ws.adv.d3.body':'Gabriele executes a complete realistic tattoo live, explaining every phase in real time. Open Q&A, collective feedback, and official certificate delivery.',
+'ws.d1':'Day 1','ws.d2':'Day 2','ws.d3':'Day 3',
+'ws.cert':'Certificate of Participation Included','ws.cta':'Request Information',
+'gallery.label':'Selected Works','gallery.title':'The Portfolio',
+'gf.all':'All','gf.portrait':'Portraits','gf.realism':'Realism','gf.animals':'Animals','gf.fullback':'Full Back',
+'gi.figurative':'Figurative · Oil Study','gi.fullback':'Full Back · Black & Grey','gi.sleeve':'Sleeve · Religious Realism','gi.wings':'Wings · Detail','gi.angels':'Angels · Sleeve','gi.light':'Study in Light',
+'gallery.cta':'Commission Your Piece',
+'book.label':'Get in Touch','book.title':'Book a Session',
+'book.sub':'Limited availability each month. Gabriele will respond personally within 48 hours. Or email <a href="mailto:gabrielepellerone@gmail.com" style="color:var(--gold)">gabrielepellerone@gmail.com</a> directly.',
+'book.fname':'Name','book.fname.ph':'Your name','book.email':'Email','book.phone':'Phone','book.phone.ph':'+1 000 000 0000',
+'book.type':'Request Type','book.type.ph':'Select…','book.type.tattoo':'Tattoo Session','book.type.prive':'Tattoo Privé','book.type.workshop':'Workshop','book.type.nft':'NFT / Collaboration',
+'book.vision':'Your Message','book.vision.ph':'Describe your idea, project, or question…',
+'book.submit':'Send Message →','book.sent':'Message Sent ✓',
+'footer.brand':'Italian tattoo artist and visual artist. Active between Milan, Reggio Calabria, and New York City. Hyper-realism, portraits, NFTs, and the Tattoo Privé experience.',
+'footer.nav':'Navigation','footer.specialties':'Specialties','footer.contact':'Contact',
+'footer.copy':'© 2026 Gabriele Pellerone. All rights reserved.','footer.privacy':'Privacy Policy',
+},
+it:{
+'nav.about':'Chi Sono','nav.stories':'Opere','nav.prive':'Tattoo Privé','nav.workshop':'Workshop','nav.gallery':'Galleria','nav.contact':'Contatti','nav.book':'Prenota una Sessione',
+'ui.close':'Chiudi ✕','ui.scroll':'Scorri',
+'hero.eyebrow':'Iper-Realismo · Ritratti · Arte Figurativa · Forbes Italia','hero.subtitle':'Milano · Reggio Calabria · New York','hero.sub':'Dove la pelle diventa un capolavoro','hero.cta1':'Vedi il Portfolio','hero.cta2':'Tattoo Privé →',
+'about.label':"L'Artista",'about.title':"Un'icona internazionale<br><em>del realismo.</em>",
+'about.p1':"Gabriele Pellerone è un tatuatore e artista visivo italiano, attivo tra Milano e Reggio Calabria, con una forte presenza a New York City. Ha iniziato a disegnare all'età di tre anni e si è avvicinato al tatuaggio da autodidatta a vent'anni, trasformando la sua visione artistica in un linguaggio unico che unisce pelle, arte e Web 3.0.",
+'about.p2':"Specializzato in tatuaggi realistici e ritratti, è seguito da oltre 1,5 milioni di persone online. Ha tatuato Travis Scott, Central Cee, Cash XO e Baby Gang, ed è stato tra i primi a portare il tatuaggio nel mondo dell'arte contemporanea, esponendo alla Biennale di Venezia.",
+'about.forbes':'Forbes Italia — "100 Number One: I Giovani Leader Italiani del Futuro 2022"',
+'tag.realism':'Iper-Realismo','tag.portrait':'Ritratti','tag.nft':'NFT & Web 3.0','tag.animals':'Animali','tag.divine':'Arte Narrativa',
+'stat.followers':'Follower Globali','stat.nft':'Opere NFT','stat.stories':'Storie Narrate','stat.cities':'Città',
+'stories.label':'Opere in Evidenza','stories.title':'Storie narrate<br><em>attraverso la pelle.</em>',
+'story1.tag':'Realismo Narrativo · Schiena Completa','story1.title':"Il Viaggio di Dante",'story1.body':"Un tatuaggio ispirato alla Divina Commedia — dall'Inferno al Paradiso, omaggiando ogni passo del viaggio di Dante. Toni scuri e texturati, ascesa graduale, chiarezza luminosa. Nulla è casuale.",
+'story2.tag':'Realismo a Colori · Manica','story2.title':'Un Ritratto, Una Storia','story2.body':'Un ritratto non è solo una questione tecnica — è una responsabilità. Ogni sguardo porta una storia che merita empatia, precisione e cuore.',
+'story3.tag':'Fotorealismo · Memoriale','story3.title':'Memory Photo','story3.body':"Le vecchie fotografie hanno un potere speciale. Trasformarle in un tatuaggio significa tramandare un ricordo — restituire dignità e verità a un'immagine che il tempo ha sbiadito.",
+'prive.label':'Esperienza Esclusiva','prive.title':'Tattoo Privé<br><em>Experience</em>',
+'prive.p1':"Il Tattoo Privé Experience ridefinisce la tradizionale sessione di tatuaggio elevandola a un viaggio immersivo e sofisticato — ponendo il cliente al centro di un ambiente esclusivo e meticolosamente curato.",
+'prive.p2':"Non è solo un tatuaggio — è un'esperienza accuratamente costruita per chi cerca autenticità, raffinatezza e innovazione in ogni aspetto del proprio percorso.",
+'prive.includes':'Cosa Include',
+'prive.i1.title':'Sessione Privata con Gabriele','prive.i1.desc':"Un'opera d'arte unica sulla tua pelle, creata in completa privacy con la massima attenzione ai dettagli.",
+'prive.i2.title':'Esperienza Esclusiva con Sigaro','prive.i2.desc':"Un momento di relax e piacere pensato per completare l'atmosfera della giornata.",
+'prive.i3.title':'Ago da Tatuaggio Placcato Oro 18k','prive.i3.desc':'Un regalo di lusso personalizzato — un souvenir unico creato come simbolo del tuo Tattoo Privé.',
+'prive.i4.title':'Aperitivo con Champagne e Pranzo Raffinato','prive.i4.desc':'Un\'esperienza gastronomica curata per celebrare la tua giornata in modo raffinato e memorabile.',
+'prive.i5.title':'Prenotazione Prioritaria — Nessuna Lista d\'Attesa','prive.i5.desc':'Accesso esclusivo nella data prescelta, anche di domenica, senza ritardi.',
+'prive.cta':'Prenota il tuo Privé',
+'ws.label':'Formazione','ws.title':'Padroneggia la tua arte.<br><em>Impara dal migliore.</em>','ws.intro':'I miei seminari vanno oltre la semplice tecnica — trasmettono un metodo strutturato, una visione artistica chiara e una solida disciplina professionale. Esperienze immersive e mirate per formare professionisti del tatuaggio competenti e consapevoli.',
+'ws.tab.base':'Workshop Base','ws.tab.adv':'Workshop Avanzato',
+'ws.base.meta':'Durata: 3 Giorni · Fondamenti del Tatuaggio',
+'ws.base.d1.body':'Storia e significato culturale, igiene e sicurezza, materiali e strumenti, teoria del disegno, creazione dello stencil, etica professionale.',
+'ws.base.d2.body':'Setup della macchinetta e dimostrazione, esercizi pratici guidati su pelle sintetica — tratteggio, linea, riempimento — con feedback individuale di Gabriele.',
+'ws.base.d3.body':'Sessione di tatuaggio in simulazione reale su pelle sintetica. Supervisione passo passo, revisione collettiva, feedback individuale e consegna attestato.',
+'ws.adv.meta':'Durata: 3 Giorni · Realismo Avanzato & Posizionamento Professionale',
+'ws.adv.d1.body':'Mentalità professionale, teoria del tatuaggio realistico (B&N e colore), armonie cromatiche avanzate, saturazione dei pigmenti, marketing e posizionamento sui social media.',
+'ws.adv.d2.body':'Realizzazione completa di un tatuaggio realistico — linee, sfumature morbide, tecniche di riempimento — ogni fase con correzioni personalizzate da Gabriele.',
+'ws.adv.d3.body':'Gabriele esegue un tatuaggio realistico completo dal vivo, spiegando ogni fase in tempo reale. Q&A aperto, feedback collettivi e consegna attestati ufficiali.',
+'ws.d1':'Giorno 1','ws.d2':'Giorno 2','ws.d3':'Giorno 3',
+'ws.cert':'Attestato di Partecipazione Incluso','ws.cta':'Richiedi Informazioni',
+'gallery.label':'Opere Selezionate','gallery.title':'Il Portfolio',
+'gf.all':'Tutto','gf.portrait':'Ritratti','gf.realism':'Realismo','gf.animals':'Animali','gf.fullback':'Schiena Completa',
+'gi.figurative':'Figurativo · Studio','gi.fullback':'Schiena Completa · B&N','gi.sleeve':'Manica · Realismo Religioso','gi.wings':'Ali · Dettaglio','gi.angels':'Angeli · Manica','gi.light':'Studio di Luce',
+'gallery.cta':'Commissiona la Tua Opera',
+'book.label':'Contattaci','book.title':'Prenota una Sessione',
+'book.sub':'Disponibilità limitata ogni mese. Gabriele risponderà personalmente entro 48 ore. Oppure scrivi direttamente a <a href="mailto:gabrielepellerone@gmail.com" style="color:var(--gold)">gabrielepellerone@gmail.com</a>.',
+'book.fname':'Nome','book.fname.ph':'Il tuo nome','book.email':'Email','book.phone':'Telefono','book.phone.ph':'+39 000 000 0000',
+'book.type':'Tipo di Richiesta','book.type.ph':'Seleziona…','book.type.tattoo':'Sessione Tattoo','book.type.prive':'Tattoo Privé','book.type.workshop':'Workshop','book.type.nft':'NFT / Collaborazione',
+'book.vision':'Il tuo Messaggio','book.vision.ph':'Descrivi la tua idea, il progetto o la domanda…',
+'book.submit':'Invia Messaggio →','book.sent':'Messaggio Inviato ✓',
+'footer.brand':'Tatuatore e artista visivo italiano. Attivo tra Milano, Reggio Calabria e New York City. Iper-realismo, ritratti, NFT e il Tattoo Privé Experience.',
+'footer.nav':'Navigazione','footer.specialties':'Specialità','footer.contact':'Contatti',
+'footer.copy':'© 2026 Gabriele Pellerone. Tutti i diritti riservati.','footer.privacy':'Privacy Policy',
+}
+};
+
+let lang='en';
+
+function setLang(l){
+  if(l===lang)return; lang=l;
+  document.getElementById('btnEN').classList.toggle('active',l==='en');
+  document.getElementById('btnIT').classList.toggle('active',l==='it');
+  document.documentElement.lang=l;
+  const dict=T[l];
+  const els=document.querySelectorAll('[data-t]');
+  els.forEach(el=>el.style.opacity='0');
+  setTimeout(()=>{
+    els.forEach(el=>{const k=el.getAttribute('data-t');if(dict[k]!==undefined)el.innerHTML=dict[k];});
+    document.querySelectorAll('[data-t-ph]').forEach(el=>{const k=el.getAttribute('data-t-ph');if(dict[k])el.placeholder=dict[k];});
+    els.forEach(el=>el.style.opacity='1');
+  },220);
+}
+
+// CURSOR
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+document.addEventListener('mousemove',e=>{
+  cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';
+  setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},60);
+});
+document.querySelectorAll('a,button,.gallery-item,.story-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.transform='translate(-50%,-50%) scale(1.6)';ring.style.opacity='.4';});
+  el.addEventListener('mouseleave',()=>{ring.style.transform='translate(-50%,-50%) scale(1)';ring.style.opacity='.6';});
+});
+
+// NAV
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',window.scrollY>60));
+
+// REVEAL
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+
+// GALLERY FILTERS
+document.querySelectorAll('.gallery-filters button').forEach(btn=>{
+  btn.addEventListener('click',()=>{document.querySelectorAll('.gallery-filters button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');});
+});
+
+// WORKSHOP TABS
+function switchTab(e,name){
+  document.querySelectorAll('.workshop-content').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.workshop-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  e.target.classList.add('active');
+}
+
+// LIGHTBOX
+const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg');
+function openLightbox(el){lbImg.src=el.querySelector('img').src;lb.classList.add('active');}
+document.getElementById('lbClose').addEventListener('click',()=>lb.classList.remove('active'));
+lb.addEventListener('click',e=>{if(e.target===lb)lb.classList.remove('active');});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('active');});
+
+// FORM
+function handleSubmit(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('.btn-submit');
+  btn.textContent=T[lang]['book.sent']||'Sent ✓';
+  btn.style.background='transparent';btn.style.color='var(--gold)';
+}
+</script>
+</body>
+</html>
